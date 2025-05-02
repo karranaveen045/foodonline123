@@ -1,0 +1,21 @@
+
+@keyframes show-toast {
+0% { bottom: -100%; right: 20px; }
+20% { bottom: 100px; right: 20px; }
+80% { bottom: 100px; right: 20px; }
+{ bottom: 100px; right: 20px; } /* Stay at the middle right side */
+}
+
+.show-notification {
+position: fixed;
+bottom: -100%; /* Start off-screen */
+right: 20px; /* Position from the right */
+animation-name: show-toast;
+animation-duration: 5s;
+z-index: 99;
+}
+.btn.btn-info{
+padding:2x 1.75m;
+font-size:12px;
+cursor:pointer
+}
