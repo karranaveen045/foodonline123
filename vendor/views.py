@@ -70,24 +70,34 @@ def fooditems_by_category(request,pk=None):
 @login_required(login_url='login')
 @user_passes_test(check_role_vendor)
 def add_category(request):
-    if request.method=='POST':
-        form=CategoryForm(request.POST)
+    if request.method == 'POST':
+        form = CategoryForm(request.POST)
         if form.is_valid():
-            category_name=form.cleaned_data['category_name']
-            category=form.save(commit=False)
-            category.vendor=get_vendor(request)
-            category.slug=slugify(category_name)
-            form.save()
-            messages.success(request,'Category added successfully!')
-            return redirect('menu_builder')
+            category_name = form.cleaned_data['category_name']
+            vendor = get_vendor(request)
+
+            # Check if the category name already exists for this vendor
+            if Category.objects.filter(category_name=category_name, vendor=vendor).exists():
+                messages.error(request, 'Category already exists for this vendor. Please try again.')
+            else:
+                category = form.save(commit=False)
+                category.vendor = vendor
+                category.save()  # Save to generate the category id
+                category.slug = slugify(category_name) + '-' + str(category.id)  # chicken-15
+                category.save()
+                messages.success(request, 'Category added successfully!')
+                return redirect('menu_builder')
         else:
             print(form.errors)
     else:
-        form=CategoryForm()
-    context={
-        'form':form,
+        form = CategoryForm()
+
+    context = {
+        'form': form,
     }
-    return render(request, 'vendor/add_category.html',context)
+    return render(request, 'vendor/add_category.html', context)
+
+
 @login_required(login_url='login')
 @user_passes_test(check_role_vendor)
 
@@ -129,9 +139,13 @@ def add_food(request):
             food=form.save(commit=False)
             food.vendor=get_vendor(request)
             food.slug=slugify(foodtitle)
-            form.save()
-            messages.success(request,'Category added successfully!')
-            return redirect('fooditems_by_category',food.category.id)
+            #check if the food item alredy exist
+            if FoodItem.objects.filter(slug=food.slug).exists():
+                messages.error(request,'Food item alredy exist. Please try again.')
+            else:
+                form.save()
+                messages.success(request,'Category added successfully!')
+                return redirect('fooditems_by_category',food.category.id)
         else:
             print(form.errors)
     else:
