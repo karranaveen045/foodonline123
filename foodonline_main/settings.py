@@ -69,6 +69,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'accounts.context_processors.get_vendor',
+                'accounts.context_processors.get_google_api',
                 'marketplace.context_processors.get_cart_counter',
                 'marketplace.context_processors.get_cart_amounts',
             ],
@@ -149,3 +150,4 @@ MESSAGE_TAGS={
 # EMAIL_HOST_PASSWORD='Karra@1122'
 # EMAIL_USE_TLS=True
 
+GOOGLE_API_KEY = 'AIzaSyCSO7VeHCX-w7UzCCcheS4CL6NvsKaf4Dc'
