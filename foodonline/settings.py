@@ -156,5 +156,5 @@ MESSAGE_TAGS={
 
 GOOGLE_API_KEY = 'AIzaSyCSO7VeHCX-w7UzCCcheS4CL6NvsKaf4Dc'
 
-ALLOWED_HOSTS=['foodonline123-8.onrender.com']
+ALLOWED_HOSTS=['foodonline123-nav.onrender.com']
 
