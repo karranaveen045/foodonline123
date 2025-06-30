@@ -1,2 +1,1 @@
-web: gunicorn
-foodonline_main.wsgi:application
+web: gunicorn foodonline_main.wsgi:application
