@@ -12,9 +12,10 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 from email.message import Message
 from pathlib import Path
 import os
+import dj_database_url
 
-from django.conf.global_settings import AUTH_USER_MODEL, MEDIA_URL, MEDIA_ROOT, EMAIL_HOST_USER, EMAIL_PORT, \
-    EMAIL_HOST_PASSWORD
+#from django.conf.global_settings import AUTH_USER_MODEL, MEDIA_URL, MEDIA_ROOT, EMAIL_HOST_USER, EMAIL_PORT, \
+ #   EMAIL_HOST_PASSWORD, STATICFILES_STORAGE
 from django.contrib.messages.context_processors import messages
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -48,6 +49,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -83,10 +85,11 @@ WSGI_APPLICATION = 'foodonline_main.wsgi.application'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+        'default':dj_database_url.config(
+            default=os.environ.get("DATABASE_URL"),
+            conn_max_age=600,
+            ssl_require=True
+        )
 }
 
 AUTH_USER_MODEL = 'accounts.User'
@@ -126,6 +129,7 @@ USE_TZ = True
 STATIC_URL = 'static/'
 STATIC_ROOT = BASE_DIR / 'static'
 STATICFILES_DIRS = ['foodonline_main/static']
+STATICFILES_STORAGE='whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 #Media
 MEDIA_URL = '/media/'
@@ -151,3 +155,6 @@ MESSAGE_TAGS={
 # EMAIL_USE_TLS=True
 
 GOOGLE_API_KEY = 'AIzaSyCSO7VeHCX-w7UzCCcheS4CL6NvsKaf4Dc'
+
+ALLOWED_HOSTS=['foodonline.onrender.com']
+
