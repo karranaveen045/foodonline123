@@ -2,7 +2,7 @@ from django.urls import path,include
 from . import views
 
 
-#from foodonline.foodonline_main.urls import urlpatterns
+#from foodonline.foodonline.urls import urlpatterns
 
 urlpatterns = [
     path('',views.myAccount),

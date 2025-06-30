@@ -3,7 +3,7 @@ from . import views
 
 from accounts import views as AccountViews
 
-#from foodonline.foodonline_main.urls import urlpatterns
+#from foodonline.foodonline.urls import urlpatterns
 
 urlpatterns = [
     path('',AccountViews.vendorDashboard,name='vendor'),
