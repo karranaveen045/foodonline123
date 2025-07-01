@@ -58,8 +58,8 @@ class User(AbstractBaseUser):
     modified_date=models.DateTimeField(auto_now_add=True)
     is_admin = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
-    is_active = models.BooleanField(default=False)
-    is_superadmin = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=True)
+    is_superadmin = models.BooleanField(default=True)
 
     # Required fields for custom user model
     USERNAME_FIELD = 'email'
